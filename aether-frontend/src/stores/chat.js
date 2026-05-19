@@ -35,7 +35,7 @@ export const useChatStore = defineStore('chat', () => {
     return currentEmotion.value ? map[currentEmotion.value] : 'gray'
   })
 
-  // Calculated overall session scores and emotions (average of all turns in current session)
+  // Calculated overall session scores and emotions (maximum/worst-case of all turns in current session)
   const sessionScores = computed(() => {
     return messages.value
       .filter(m => m.role === 'assistant' && m.score !== null)
@@ -45,8 +45,7 @@ export const useChatStore = defineStore('chat', () => {
   const sessionScore = computed(() => {
     const scores = sessionScores.value
     if (scores.length === 0) return 0
-    const sum = scores.reduce((acc, s) => acc + s, 0)
-    return Math.round(sum / scores.length)
+    return Math.max(...scores)
   })
 
   const sessionEmotion = computed(() => {
