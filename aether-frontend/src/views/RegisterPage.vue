@@ -63,6 +63,17 @@
             </div>
           </div>
 
+          <!-- Konfirmasi Password -->
+          <div>
+            <label class="block text-xs text-white/50 font-medium mb-2">Konfirmasi Password</label>
+            <div class="relative">
+              <Lock :size="16" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30" />
+              <input v-model="form.password_confirmation" :type="showPw ? 'text' : 'password'" required minlength="8"
+                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pl-10 pr-10 text-sm text-white placeholder-white/25 outline-none focus:border-purple-500/60 focus:bg-white/8 transition-all"
+                placeholder="Ulangi password" />
+            </div>
+          </div>
+
           <div class="flex items-start gap-3">
             <button type="button" @click="form.agree = !form.agree"
               :class="['w-5 h-5 rounded border transition-all flex items-center justify-center mt-0.5 shrink-0',
@@ -99,7 +110,7 @@ import { register } from '@/api/auth'
 const router = useRouter()
 const auth = useAuthStore()
 
-const form = ref({ name: '', email: '', password: '', agree: false })
+const form = ref({ name: '', email: '', password: '', password_confirmation: '', agree: false })
 const loading = ref(false)
 const error = ref('')
 const showPw = ref(false)
@@ -124,11 +135,19 @@ async function handleRegister() {
   loading.value = true
   error.value = ''
   try {
-    const { user, token } = await register(form.value.name, form.value.email, form.value.password)
+    const { user, token } = await register(form.value.name, form.value.email, form.value.password, form.value.password_confirmation)
     auth.setAuth(user, token)
     router.push('/chat')
   } catch (e) {
-    error.value = e.message || 'Gagal mendaftar. Coba lagi.'
+    // Handle Laravel validation errors
+    if (e.response?.data?.errors) {
+      const errors = e.response.data.errors
+      error.value = Object.values(errors).flat().join(' ')
+    } else if (e.response?.data?.message) {
+      error.value = e.response.data.message
+    } else {
+      error.value = e.message || 'Gagal mendaftar. Coba lagi.'
+    }
   } finally {
     loading.value = false
   }

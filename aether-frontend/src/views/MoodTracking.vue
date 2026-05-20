@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { TrendingUp, Flame, Activity, ShieldCheck, PieChart, Calendar } from '@lucide/vue'
 import { useMoodStore } from '@/stores/mood'
@@ -84,15 +84,19 @@ const moodStore = useMoodStore()
 const auth = useAuthStore()
 const router = useRouter()
 
+onMounted(() => {
+  moodStore.fetchMoodData()
+})
+
 const total = computed(() => {
   const d = moodStore.emotionDistribution
-  return d.Hijau + d.Kuning + d.Merah
+  return (d.Hijau || 0) + (d.Kuning || 0) + (d.Merah || 0)
 })
 
 const distribution = computed(() => [
-  { label: 'Stabil', emoji: '🟢', pct: Math.round((moodStore.emotionDistribution.Hijau / total.value) * 100), color: 'text-emerald-400', bar: 'bg-emerald-500' },
-  { label: 'Distress', emoji: '🟡', pct: Math.round((moodStore.emotionDistribution.Kuning / total.value) * 100), color: 'text-yellow-400', bar: 'bg-yellow-500' },
-  { label: 'Krisis', emoji: '🔴', pct: Math.round((moodStore.emotionDistribution.Merah / total.value) * 100), color: 'text-red-400', bar: 'bg-red-500' },
+  { label: 'Stabil', emoji: '🟢', pct: total.value > 0 ? Math.round((moodStore.emotionDistribution.Hijau / total.value) * 100) : 0, color: 'text-emerald-400', bar: 'bg-emerald-500' },
+  { label: 'Distress', emoji: '🟡', pct: total.value > 0 ? Math.round((moodStore.emotionDistribution.Kuning / total.value) * 100) : 0, color: 'text-yellow-400', bar: 'bg-yellow-500' },
+  { label: 'Krisis', emoji: '🔴', pct: total.value > 0 ? Math.round((moodStore.emotionDistribution.Merah / total.value) * 100) : 0, color: 'text-red-400', bar: 'bg-red-500' },
 ])
 
 const stats = computed(() => [

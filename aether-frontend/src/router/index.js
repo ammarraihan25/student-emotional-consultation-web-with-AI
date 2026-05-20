@@ -55,8 +55,19 @@ const router = createRouter({
   }
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+
+  // If token is present but user profile is null (e.g., page reload), restore it
+  if (authStore.isAuthenticated && !authStore.user) {
+    try {
+      await authStore.fetchUser()
+    } catch (err) {
+      console.warn('Failed to restore user session on reload:', err.message)
+      return next({ name: 'login' })
+    }
+  }
+
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next({ name: 'login' })
   } else if (to.meta.guest && authStore.isAuthenticated && to.name !== 'landing') {
@@ -65,5 +76,6 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
 
 export default router

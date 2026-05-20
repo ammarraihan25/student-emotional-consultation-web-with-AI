@@ -115,14 +115,24 @@ async function handleLogin() {
     auth.setAuth(user, token)
     router.push('/chat')
   } catch (e) {
-    error.value = e.message || 'Terjadi kesalahan. Coba lagi.'
+    // Show detailed error from server if available
+    error.value = e.response?.data?.message || e.message || 'Terjadi kesalahan. Coba lagi.'
   } finally {
     loading.value = false
   }
 }
 
-function demoLogin() {
-  auth.demoLogin()
-  router.push('/chat')
+async function demoLogin() {
+  loading.value = true
+  error.value = ''
+  try {
+    await auth.demoLogin()
+    router.push('/chat')
+  } catch (e) {
+    console.error('Demo login failed', e)
+    error.value = e.response?.data?.message || e.message || 'Gagal memproses demo login.'
+  } finally {
+    loading.value = false
+  }
 }
 </script>

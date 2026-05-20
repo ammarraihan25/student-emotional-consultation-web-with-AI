@@ -44,7 +44,7 @@
           <!-- ChatWindow -->
           <div class="flex-1 min-h-0">
             <ChatWindow
-              :messages="chatStore.messages"
+              :messages="chatStore.displayedMessages"
               :is-typing="chatStore.isTyping"
               :is-analyzing="chatStore.isAnalyzing"
               @send="chatStore.sendMessage($event)"
@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Menu } from '@lucide/vue'
 import { useChatStore } from '@/stores/chat'
@@ -90,6 +90,10 @@ const chatStore = useChatStore()
 const authStore = useAuthStore()
 const router = useRouter()
 const mobileSidebarOpen = ref(false)
+
+onMounted(() => {
+  chatStore.loadHistory()
+})
 
 const tips = [
   'Istirahat 5 menit setiap jam bisa mencegah burnout akademik.',

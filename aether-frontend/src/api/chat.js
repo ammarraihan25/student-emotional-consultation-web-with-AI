@@ -1,12 +1,5 @@
-import axios from 'axios'
+import http from './axios'
 import { PREDEFINED_RESPONSES } from './predefined_responses.js'
-
-// Direct call to FastAPI on port 8000 (via Vite proxy /ai → http://127.0.0.1:8000)
-const aiClient = axios.create({
-  baseURL: '/ai',
-  timeout: 30000,
-  headers: { 'Content-Type': 'application/json' }
-})
 
 // Helper to normalize messages for robust matching
 function cleanMessage(msg) {
@@ -21,22 +14,37 @@ for (const [key, value] of Object.entries(PREDEFINED_RESPONSES)) {
 }
 
 /**
- * Analyze emotion via Python FastAPI NLP engine
- * POST /ai/analyze-emotion → FastAPI → returns { pesan_asli, total_skor, indikator, ai_response }
- *
- * TODO: Route this through Laravel API (/api/chat) once backend is ready
+ * Analyze emotion via Laravel API → Python FastAPI → saved to DB
+ * POST /api/chat/analyze → Laravel ChatController → FastAPI → DB → response
  */
 export async function analyzeEmotion(message) {
   try {
-    const response = await aiClient.post('/analyze-emotion', { message })
+    const response = await http.post('/chat/analyze', { message })
     return response.data
   } catch (err) {
-    // Fallback mock for demo when FastAPI is not running
-    console.warn('[Aether] FastAPI offline — using mock response')
+    // If user is not authenticated or server error, use local fallback
+    console.warn('[Aether] API offline — using local fallback', err.message)
     return mockAnalyze(message)
   }
 }
 
+/**
+ * Get chat history from database via Laravel API
+ * GET /api/chat/history
+ */
+export async function getChatHistory() {
+  try {
+    const response = await http.get('/chat/history')
+    return response.data
+  } catch (err) {
+    console.warn('[Aether] Could not fetch chat history', err.message)
+    return []
+  }
+}
+
+/**
+ * Local fallback when API is not available (demo mode)
+ */
 function mockAnalyze(message) {
   const text = message.toLowerCase()
   let score = 10
@@ -70,9 +78,4 @@ function mockAnalyze(message) {
     indikator,
     ai_response
   }
-}
-
-export async function getChatHistory() {
-  // TODO: GET /api/chat/history
-  return []
 }
