@@ -6,7 +6,7 @@
         <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" @click="$emit('close')"></div>
 
         <!-- Modal Card -->
-        <div class="relative w-full max-w-md glass rounded-3xl border border-red-500/30 overflow-hidden animate-pulse-glow-red">
+        <div class="relative w-full max-w-md glass bg-white dark:bg-[#060B14] rounded-3xl border border-red-500/30 overflow-hidden animate-pulse-glow-red shadow-2xl dark:shadow-none">
           <!-- Top glow bar -->
           <div class="h-1 w-full bg-gradient-to-r from-red-600 via-red-400 to-orange-400"></div>
 
@@ -16,37 +16,37 @@
               <div class="w-20 h-20 rounded-full bg-red-500/20 border-2 border-red-500/40 flex items-center justify-center mb-4 animate-pulse">
                 <AlertTriangle :size="36" class="text-red-400" />
               </div>
-              <h2 class="text-2xl font-bold text-white mb-2">Kamu Tidak Sendirian</h2>
-              <p class="text-sm text-white/60 leading-relaxed">
+              <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Kamu Tidak Sendirian</h2>
+              <p class="text-sm text-slate-600 dark:text-white/60 leading-relaxed">
                 Sistem mendeteksi kamu mungkin membutuhkan dukungan segera. Kami peduli dengan kondisimu.
               </p>
             </div>
 
             <!-- Crisis resources -->
             <div class="space-y-3 mb-6">
-              <p class="text-xs text-white/40 uppercase tracking-wider font-medium">Hubungi Segera:</p>
+              <p class="text-xs text-slate-500 dark:text-white/40 uppercase tracking-wider font-medium">Hubungi Segera:</p>
               <a v-for="hotline in hotlines" :key="hotline.name"
                 :href="hotline.href"
-                class="flex items-center gap-3 glass-hover rounded-xl p-3 border border-white/10 group"
+                class="flex items-center gap-3 bg-slate-50 dark:bg-transparent rounded-xl p-3 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 group transition-colors shadow-sm dark:shadow-none"
               >
                 <div :class="['w-10 h-10 rounded-lg flex items-center justify-center shrink-0', hotline.bg]">
                   <component :is="hotline.icon" :size="18" :class="hotline.iconColor" />
                 </div>
                 <div>
-                  <p class="text-sm font-semibold text-white">{{ hotline.name }}</p>
-                  <p class="text-xs text-white/50">{{ hotline.number }}</p>
+                  <p class="text-sm font-semibold text-slate-900 dark:text-white">{{ hotline.name }}</p>
+                  <p class="text-xs text-slate-500 dark:text-white/50">{{ hotline.number }}</p>
                 </div>
-                <ExternalLink :size="14" class="ml-auto text-white/20 group-hover:text-white/50 transition-colors" />
+                <ExternalLink :size="14" class="ml-auto text-slate-400 dark:text-white/20 group-hover:text-slate-600 dark:group-hover:text-white/50 transition-colors" />
               </a>
             </div>
 
             <!-- Breathing exercise -->
-            <div class="glass rounded-2xl p-4 border border-blue-500/20 mb-6">
+            <div class="glass bg-blue-50/50 dark:bg-transparent rounded-2xl p-4 border border-blue-500/20 mb-6 shadow-sm dark:shadow-none">
               <div class="flex items-center gap-2 mb-2">
-                <Wind :size="16" class="text-blue-400" />
-                <span class="text-sm font-medium text-blue-300">Latihan Napas Cepat</span>
+                <Wind :size="16" class="text-blue-500 dark:text-blue-400" />
+                <span class="text-sm font-medium text-blue-600 dark:text-blue-300">Latihan Napas Cepat</span>
               </div>
-              <p class="text-xs text-white/50 leading-relaxed">
+              <p class="text-xs text-slate-600 dark:text-white/50 leading-relaxed">
                 Tarik napas 4 detik → Tahan 7 detik → Hembuskan 8 detik. Ulangi 3x.
               </p>
             </div>
@@ -55,7 +55,7 @@
             <div class="flex gap-3">
               <button
                 @click="$emit('close')"
-                class="flex-1 py-3 rounded-xl text-sm font-medium text-white/60 border border-white/15 hover:bg-white/5 transition-all"
+                class="flex-1 py-3 rounded-xl text-sm font-medium text-slate-700 dark:text-white/60 border border-slate-300 dark:border-white/15 hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
               >
                 Kembali ke Chat
               </button>
