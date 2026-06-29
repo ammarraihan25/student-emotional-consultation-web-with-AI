@@ -9,7 +9,7 @@
 
   --color-primary-turquoise: #16D5D2;
   --color-secondary-cyan: #36CFFF;
-  
+
   --color-accent-lavender: #8B5CF6;
   --color-accent-indigo: #6366F1;
   --color-accent-mint: #4ADE80;
@@ -49,7 +49,7 @@ body {
 .dark body {
   background-color: #060B14;
   background-image: radial-gradient(circle at top right, rgba(22, 213, 210, 0.05) 0%, transparent 40%),
-                    radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+    radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
   background-attachment: fixed;
   color: #f8fafc;
 }
@@ -59,41 +59,79 @@ body {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(54, 207, 255, 0.3);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(54, 207, 255, 0.6);
 }
 
 /* ─── Animations ─── */
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(1deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(1deg);
+  }
 }
 
 @keyframes float-slow {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-25px) rotate(-1.5deg); }
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-25px) rotate(-1.5deg);
+  }
 }
 
 @keyframes pulse-glow-cyan {
-  0%, 100% { box-shadow: 0 0 20px rgba(54, 207, 255, 0.2); }
-  50% { box-shadow: 0 0 40px rgba(54, 207, 255, 0.5), 0 0 60px rgba(22, 213, 210, 0.3); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(54, 207, 255, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(54, 207, 255, 0.5), 0 0 60px rgba(22, 213, 210, 0.3);
+  }
 }
 
 @keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes blur-in {
-  from { opacity: 0; filter: blur(10px); }
-  to { opacity: 1; filter: blur(0); }
+  from {
+    opacity: 0;
+    filter: blur(10px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
 }
 
 /* ─── Utility Classes ─── */
@@ -101,6 +139,7 @@ body {
   font-family: 'Playfair Display', serif;
   font-style: italic;
 }
+
 .font-serif {
   font-family: 'Playfair Display', serif;
 }
@@ -108,12 +147,15 @@ body {
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
+
 .animate-float-slow {
   animation: float-slow 10s ease-in-out infinite;
 }
+
 .animate-fade-in-up {
   animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
 .animate-blur-in {
   animation: blur-in 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -132,6 +174,7 @@ body {
   .glass-panel-hover {
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
+
   .glass-panel-hover:hover {
     background: rgba(255, 255, 255, 0.04);
     border-color: rgba(255, 255, 255, 0.12);
@@ -154,6 +197,7 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
 .text-gradient-lavender {
   background: linear-gradient(135deg, #8B5CF6, #36CFFF);
   -webkit-background-clip: text;
@@ -176,6 +220,7 @@ body {
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }
+
 .btn-primary-glass:hover {
   background: rgba(22, 213, 210, 0.2);
   box-shadow: 0 0 20px rgba(22, 213, 210, 0.3);
@@ -192,6 +237,7 @@ body {
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
 }
+
 .btn-secondary-glass:hover {
   background: rgba(255, 255, 255, 0.08);
   color: white;
@@ -206,6 +252,7 @@ body {
   color: #f8fafc;
   box-shadow: 0 4px 15px rgba(22, 213, 210, 0.05);
 }
+
 .bubble-ai {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -225,6 +272,7 @@ body {
   border-radius: 50%;
   pointer-events: none;
 }
+
 .bg-blob-2 {
   position: absolute;
   width: 500px;
@@ -243,9 +291,27 @@ body {
   background-color: #16D5D2;
   animation: typing 1.4s infinite ease-in-out both;
 }
-.typing-dot:nth-child(1) { animation-delay: -0.32s; }
-.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+.typing-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
 @keyframes typing {
-  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
-  40% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px #16D5D2; }
+
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+
+  40% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 10px #16D5D2;
+  }
 }
